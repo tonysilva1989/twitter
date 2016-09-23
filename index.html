@@ -3,33 +3,11 @@
     <meta charset="utf-8">
     <title>Timeline</title>
 	<link rel="stylesheet" href="timeline.css">
-   <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> 
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
   </head>
   <body>
     <div ng-app="myApp" ng-controller="myCtrl">
-     <!-- <p>Posts</p>
-      <table>
-          <tr >
-              <td>{{post.date}} </td>
-              <td>{{post.likes}}</td>
-              <td>{{post.user.friends}}</td>
-          </tr>
-      </table> -->
-	  <!--
-		<div class="row" >
-		  <div ng-repeat="post in posts" class="col-sm-6 col-md-4">
-			  <img src="{{post.user.picture}}" alt="Photo">
-			<div class="thumbnail">
-			  <div class="caption">
-				<h3>{{post.user.username}}</h3>
-				<p>{{post.user.bio}}<p>
-				<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-			  </div>
-			</div>
-		  </div>
-		</div>
-	  -->
 	<div class="container">
 	<div class="row">
 		<h2>Posts</h2>
@@ -43,13 +21,8 @@
 									<h5 class="handle">{{post.user.username}}</h5>
 									<div class="post-meta">
 										<div class="asker-meta">
-											<span class="qa-message-what"></span>
 											<span class="qa-message-when">
-												<span class="qa-message-when-data">{{post.date}}, on {{post.user.location}}</span>
-											</span>
-											<span class="qa-message-who">
-												<span class="qa-message-who-pad">by </span>
-												<span class="qa-message-who-data"><a href="./index.php?qa=user&qa_1=Oleg+Kolesnichenko">{{post.user.username}}</a></span>
+												<span class="qa-message-when-data">{{post.date}}</span>
 											</span>
 										</div>
 									</div>
@@ -58,6 +31,10 @@
 							<div class="qa-message-content">
 								{{post.content}}
 							</div>
+							<div class="number-likes">
+							<a href="#"><span class="badge">{{post.likes}} {{post.user.friends < 2 ? 'like' : 'likes'}}</span></a>
+							</div>
+							
 					</div></div>
 					
 					
@@ -70,9 +47,21 @@
     
     <script>
       var app = angular.module('myApp', []);
+
       app.controller('myCtrl', function($scope, $http) {
           $http.get('timeline.json').then(function(response){
+		  	  var like;
               $scope.posts = response.data;  
+			  
+			  //verificando se ha so 1 like ou ha mais likes, pra deixar no singular ou plural
+			  if ($scope.posts.likes == 1)
+			  {
+				$scope.like = "like";
+			  }
+			  else
+			  {
+				$scope.like = "likes";
+			  }
           });
       });
     </script>
