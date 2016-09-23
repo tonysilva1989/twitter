@@ -1,46 +1,29 @@
 <html>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-
-<body>
-
-<p>Try to change the names.</p>
-
-<div ng-app="myApp" ng-controller="myCtrl">
-
-página inicial
-<br>
-Full Name: {{firstName}}
-
-</div>
-
-<script>
-//função para formatar a leitura do json de entrada
-function loadJSON(callback) {
-    var xobj = new XMLHttpRequest();
-        xobj.overrideMimeType("application/json");
-        xobj.open('GET', 'timeline.json', true); // Replace 'my_data' with the path to your file
-        xobj.onreadystatechange = function () {
-          if (xobj.readyState == 4 && xobj.status == "200") {
-            // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-            callback(xobj.responseText);
-          }
-    };
-    xobj.send(null);
- }
-
- //lendo o json
- var json;
- loadJSON(function(response) {
-  // Parse JSON string into object
-    var json = JSON.parse(response);
- });
-var app = angular.module('myApp', []);
-
-app.controller('myCtrl', function($scope) {
-    $scope.firstName= "Tony";
-});
-
-</script>
-
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Timeline</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  </head>
+  <body>
+    <div ng-app="myApp" ng-controller="myCtrl">
+      <p>Posts</p>
+      <table>
+          <tr ng-repeat="post in posts">
+              <td>{{post.date}} </td>
+              <td>{{post.likes}}</td>
+              <td>{{post.user.friends}}</td>
+          </tr>
+      </table>
+    </div>
+    
+    <script>
+      var app = angular.module('myApp', []);
+      app.controller('myCtrl', function($scope, $http) {
+          $http.get('timeline.json').then(function(response){
+              $scope.posts = response.data;  
+          });
+      });
+    </script>
+  </body>
 </html>
