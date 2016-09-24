@@ -10,64 +10,65 @@
       <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
       <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
   </head>
     
   <body>
+      
     <div ng-app="appController" ng-controller="userController">
         <div class="container">
         <div class="row">
-            <h2>Posts</h2>
+            <h2><center>Timeline de Posts</center></h2>
         </div>
             
-        <div class="qa-message-list" id="wallmessages" ng-repeat="post in posts">
-                        <div class="message-item" id="m16">
-                            <div class="message-inner">
-                                <div class="message-head clearfix">
-                                    <div class="avatar pull-left"><img src="{{post.user.picture}}"></a></div>
-                                    <div class="user-detail">
-                                        <h5 class="handle">{{post.user.username}}</h5>
-                                        <button type="button" data-toggle="modal" data-target="#myModal">detalhes</button>
-                                        <div class="modal fade" id="myModal" role="dialog">
-                                                <div class="modal-dialog">
-
-                                                  <!-- Modal content-->
-                                                  <div class="modal-content">
-                                                    <div class="modal-header">
-                                                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                        <center><img src="{{post.user.picture}}"></center>
-                                                      <h4 class="modal-title"><center>{{post.user.username}}</center></h4>
+            <div class="qa-message-list" id="wallmessages" ng-repeat="post in posts">
+                <!-- bloco de seção do post na timeline -->
+                            <div class="message-item" id="m16">
+                                <div class="message-inner">
+                                    <div class="message-head clearfix">
+                                        <div class="avatar pull-left"><img src="{{post.user.picture}}"></a></div>
+                                        <div class="user-detail">
+                                            <h5 class="handle">{{post.user.username}}</h5>
+                                            <button type="button" data-toggle="modal" data-target="#{{post.user.id}}">detalhes</button>
+                                            <div class="modal fade" id="{{post.user.id}}" role="dialog">
+                                                <!--Início do Modal -->
+                                                    <div class="modal-dialog">
+                                                      <!-- Modal content-->
+                                                      <div class="modal-content">
+                                                        <div class="modal-header">
+                                                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <center><img src="{{post.user.picture}}"></center>
+                                                          <h4 class="modal-title"><center>{{post.user.username}}</center></h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Possui {{post.user.friends}} {{post.user.friends < 2 ? 'amigo.' : 'amigos'}}</p>
+                                                            <p>Mora em {{post.user.location}}</p>
+                                                            <p>{{post.user.bio}}</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        </div>
+                                                      </div>
                                                     </div>
-                                                    <div class="modal-body">
-                                                        <p>Possui {{post.user.friends}} {{post.user.friends < 2 ? 'amigo.' : 'amigos'}}</p>
-                                                        <p>Mora em {{post.user.location}}</p>
-                                                        <p>{{post.user.bio}}</p>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                  </div>
-
+                                            </div>
+                                            <div class="post-meta">
+                                                <div class="asker-meta">
+                                                    <span class="qa-message-when">
+                                                        <span class="qa-message-when-data">{{post.date}}</span>
+                                                    </span>
                                                 </div>
-                                    </div>
-                                        <div class="post-meta">
-                                            <div class="asker-meta">
-                                                <span class="qa-message-when">
-                                                    <span class="qa-message-when-data">{{post.date}}</span>
-                                                </span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="qa-message-content">
-                                    {{post.content}}
-                                </div>
-                                <div class="number-likes">
-                                <span class="badge">{{post.likes}} {{post.likes < 2 ? 'like' : 'likes'}}</span>
-                                </div>
+                                    <div class="qa-message-content">
+                                        {{post.content}}
+                                    </div>
+                                    <div class="number-likes">
+                                    <span class="badge">{{post.likes}} {{post.likes < 2 ? 'like' : 'likes'}}</span>
+                                    </div>
 
-                        </div></div>
+                            </div>
                     </div>
+            </div>
         </div>
     </div>
         
